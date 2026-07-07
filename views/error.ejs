@@ -1,0 +1,30 @@
+<% layout('/layouts/boilerplate') %>
+
+<div class="container py-5">
+
+    <div class="row align-items-center justify-content-center">
+
+        <div class="col-md-5 text-center">
+            <img
+                src="https://a0.muscache.com/airbnb/static/error_pages/404-Airbnb_final-d652ff855b1335dd3eedc3baa8dc8b69.gif"
+                class="img-fluid"
+                style="max-width: 320px;"
+                alt="Error">
+        </div>
+
+        <div class="col-md-5">
+            <h1 class="display-1 fw-bold text-danger mb-3">
+                <b>OOPS!</b>
+            </h1>
+            <h3 class="mb-3">
+                <%= message %>
+            </h3>
+            <p class="fs-5">
+                Error Code:
+                <strong><%= status %></strong>
+            </p>
+        </div>
+
+    </div>
+
+</div>

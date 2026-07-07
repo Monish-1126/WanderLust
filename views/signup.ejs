@@ -1,0 +1,58 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+<div class="row mt-5">
+    <div class="col-8 offset-2 col-md-6 offset-md-3">
+        <h2 class="mb-4">Create an Account</h2>
+        <form action="/signup" method="POST" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    placeholder="Enter username"
+                    required
+                >
+                <div class="invalid-feedback">
+                    Please enter a username.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email"
+                    required
+                >
+                <div class="invalid-feedback">
+                    Please enter a valid email.
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    required
+                >
+                <div class="invalid-feedback">
+                    Please enter a password.
+                </div>
+            </div>
+            <button class="btn btn-dark">
+                Sign Up
+            </button>
+            <a href="/login" class="btn btn-outline-secondary ms-2">
+                Login
+            </a>
+        </form>
+    </div>
+</div>
+</body>
