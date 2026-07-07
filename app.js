@@ -54,7 +54,7 @@ async function main(){
     await mongoose.connect(dburl);
 }
 app.get("/",(req,res)=>{
-    res.send("working");
+    res.redirect("/listings");
 })
 app.use(session(sessionOptions));
 app.use(flash());
@@ -80,10 +80,6 @@ main()
     .catch((err)=>{
         console.log(err);
     })
-
-app.get("/",(req,res)=>{
-    res.redirect("/listings");
-})
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
