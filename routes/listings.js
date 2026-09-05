@@ -19,6 +19,10 @@ router.get("/new",
     isLoggedin,
     listingController.renderNewForm);
 
+router.get("/my-listings",
+    isLoggedin,
+    wrapAsync(listingController.myListings));
+    
 router.get("/:id",
     wrapAsync(listingController.showListing));
 

@@ -63,3 +63,9 @@ module.exports.deleteListing = async (req, res) => {
 
     res.redirect("/listings");
 };
+
+module.exports.myListings = async (req, res) => {
+    const listings = await Listing.find({ owner: req.user._id });
+
+    res.render("myListings.ejs", { listings });
+};
