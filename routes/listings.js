@@ -2,6 +2,9 @@ const express= require("express");
 const router = express.Router();
 const wrapAsync = require('../utils/wrapAsync.js');
 const Listing = require('../models/listing.js');
+const multer = require("multer");
+const storage = require("../utils/storage");
+const upload = multer({ storage });
 const ExpressError = require('../utils/ExpressError.js');
 const {listingSchema,reviewSchema} = require('../schema.js');
 const {isLoggedin,isOwner} = require("../middleware.js")
@@ -22,12 +25,19 @@ router.get("/new",
 router.get("/my-listings",
     isLoggedin,
     wrapAsync(listingController.myListings));
-    
+
 router.get("/:id",
     wrapAsync(listingController.showListing));
 
 router.post("/",
     isLoggedin,
+    upload.single("image"),
+    (req, res, next) => {
+        console.log("MULTER FINISHED");
+        console.log("FILE:", req.file);
+        console.log("BODY:", req.body);
+        next();
+    },
     validateListing,
     wrapAsync(listingController.createListing));
 

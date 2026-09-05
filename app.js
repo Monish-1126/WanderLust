@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+require("dotenv").config({
+    path: path.resolve(__dirname, ".env")
+});
 const ejsMate = require('ejs-mate');
 const methodOverride = require("method-override");
 const session = require("express-session");
@@ -26,7 +29,6 @@ app.use(express.static(path.join(__dirname,"/public")));
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
-require("dotenv").config();
 const dburl = process.env.ATLASDB_URL;
 const store = MongoStore.create({
     mongoUrl: dburl,
@@ -82,9 +84,10 @@ app.use((req, res, next) => {
 });
 
 app.use((err,req,res,next)=>{
+    console.log("ERROR:", err);
     let {status=500,message="Something went wrong"} = err;
     res.render("error.ejs", {status,message});
-})
+});
 
 async function startServer() {
     try {
