@@ -1,6 +1,6 @@
 # WanderLust 🏡
 
-A full-stack Airbnb-inspired web application built using the MERN backend stack (MongoDB, Express.js, Node.js) with EJS templating. Users can browse listings, create their own properties, leave reviews, and manage listings securely through authentication and authorization.
+A full-stack property listing web application built with Node.js, Express.js, MongoDB, Mongoose, and EJS. The application supports user authentication, role-based ownership authorization, CRUD operations for listings, image uploads using Cloudinary, reviews, server-side validation, and session management.
 
 ## 🌐 Live Demo
 
@@ -15,6 +15,8 @@ A full-stack Airbnb-inspired web application built using the MERN backend stack 
 - Session management with Express Session & Connect Mongo
 - Flash messages for user feedback
 - Create, Read, Update and Delete property listings
+- Image uploads using Multer and Cloudinary
+- Cloud-based image storage with MongoDB storing image references
 - Add and delete reviews with ratings
 - Authentication and Authorization
 - Listing ownership verification
@@ -56,6 +58,10 @@ A full-stack Airbnb-inspired web application built using the MERN backend stack 
 - Connect Flash
 - Dotenv
 
+### File Upload & Storage
+- Multer
+- Cloudinary
+- Multer Storage Cloudinary
 ---
 
 ## 📂 Project Structure
@@ -66,7 +72,10 @@ models/
 routes/
 views/
 public/
+utils/
+init/
 middleware.js
+schema.js
 app.js
 ```
 
@@ -114,7 +123,12 @@ Create a `.env` file
 ```env
 ATLASDB_URL=your_mongodb_connection_string
 SECRET=your_session_secret
+
+CLOUD_NAME=your_cloudinary_cloud_name
+CLOUD_API_KEY=your_cloudinary_api_key
+CLOUD_API_SECRET=your_cloudinary_api_secret
 ```
+> Never commit your `.env` file or expose your Cloudinary API secret.
 
 Run the application
 
@@ -135,7 +149,7 @@ http://localhost:8080/
 - User Registration
 - User Login
 - User Logout
-- Password Encryption
+- Password Hashing
 - Persistent Sessions
 - Protected Routes
 - Flash Messages
@@ -150,10 +164,26 @@ http://localhost:8080/
 - Only review authors can delete their reviews.
 
 ---
+## 📸 Image Upload Architecture
+
+Listing images are uploaded using Multer and stored on Cloudinary rather than directly in MongoDB.
+
+The upload flow is:
+
+User selects image
+→ multipart/form-data
+→ Multer
+→ Cloudinary
+→ Image URL & filename
+→ MongoDB
+→ EJS renders the Cloudinary image
+
+MongoDB stores the image reference while Cloudinary handles the actual image storage.
+
+---
 
 ## 📈 Future Improvements
 
-- Image upload using Cloudinary
 - Interactive maps using Mapbox
 - Search and filtering
 - Wishlist/Favorites
