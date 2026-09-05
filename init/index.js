@@ -27,4 +27,6 @@ const initDB = async () => {
   console.log("data was initialized");
 };
 
-initDB();
+initDB()
+  .then(() => mongoose.connection.close())
+    .catch((err) => console.log(err));

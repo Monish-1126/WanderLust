@@ -32,7 +32,7 @@
         </div>
         <div class="reviews col-10 offset-1 mt-5">
             <hr>
-            <% if(curUser && curUser._id.equals(listing.owner._id)){ %>
+            <% if(curUser && !curUser._id.equals(listing.owner._id)){ %>
             <h4>Leave a Review</h4>
             <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
                 <div class="mb-3">
@@ -84,14 +84,16 @@
                                 <%= review.comment %>
                             </p>
                             <p class="starability-result" data-rating="<%= review.rating %>"></p>
-                             <form
-                                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-                                method="POST"
-                            >
-                                <button class="btn btn-sm btn-danger">
-                                    Delete
-                                </button>
-                            </form>
+                             <% if(curUser && curUser._id.equals(review.author._id)){ %>
+                                <form
+                                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                    method="POST"
+                                >
+                                    <button class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            <% } %>
                         </div>
                     </div>
                 <% } %>

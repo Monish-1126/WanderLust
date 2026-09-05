@@ -16,20 +16,26 @@ module.exports.saveUrl = (req,res,next)=>{
     next();
 }
 module.exports.isOwner = async (req, res, next) => {
-    let { id } = req.params;
-
+    const { id } = req.params;
     const listing = await Listing.findById(id);
-    if (!listing.owner._id.equals(req.user._id)) {
+    if (!listing) {
+        req.flash("error", "Listing not found");
+        return res.redirect("/listings");
+    }
+    if (!listing.owner.equals(req.user._id)) {
         req.flash("error", "You don't have permission to do that!");
         return res.redirect(`/listings/${id}`);
     }
     next();
 };
 module.exports.isAuthor = async (req, res, next) => {
-    let { id,reviewId } = req.params;
-
+    const { id, reviewId } = req.params;
     const review = await Review.findById(reviewId);
-    if (!review.owner._id.equals(req.user._id)) {
+    if (!review) {
+        req.flash("error", "Review not found");
+        return res.redirect(`/listings/${id}`);
+    }
+    if (!review.author.equals(req.user._id)) {
         req.flash("error", "You are not the author!");
         return res.redirect(`/listings/${id}`);
     }

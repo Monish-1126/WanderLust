@@ -50,9 +50,7 @@ const sessionOptions = {
     }
 } 
 
-async function main(){
-    await mongoose.connect(dburl);
-}
+
 app.get("/",(req,res)=>{
     res.redirect("/listings");
 })
@@ -73,13 +71,6 @@ app.use((req,res,next)=>{
     next();
 });
 
-main()
-    .then((res)=>{
-        console.log("Connection success");
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
@@ -95,6 +86,20 @@ app.use((err,req,res,next)=>{
     res.render("error.ejs", {status,message});
 })
 
-app.listen(8080, ()=>{
-    console.log("Server started");
-})
+async function startServer() {
+    try {
+        await mongoose.connect(dburl);
+
+        console.log("MongoDB connected successfully");
+
+        app.listen(8080, () => {
+            console.log("Server started");
+        });
+    } catch (err) {
+        console.error("MongoDB connection failed:");
+        console.error(err);
+        process.exit(1);
+    }
+}
+
+startServer();
